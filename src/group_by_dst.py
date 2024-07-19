@@ -1,3 +1,4 @@
+import math
 import os
 import shutil
 
@@ -12,6 +13,8 @@ def output_path(dst, location, out_folder):
     dst = float(dst)
     file_path = f"{out_folder}/{location}"
     out_name =""
+
+
 
     if dst < -300: 
         out_name = f"{file_path}/data_model_ninf_300.csv"
@@ -59,11 +62,18 @@ def group(inp_filename, out_folder, location, break_time="202301"):
                 zm = vals[7]
                 dst = vals[8]
 
+                if math.isnan(float(dst)):
+                    continue
+
                 out_name = output_path(dst, location, out_folder)
 
+
                 if not os.path.isfile(out_name):
-                    file = open(out_name, "w")
-                    file.write("date,Bx,By,Bz,Mx,My,Mz,dst\n")
+                    try:
+                        file = open(out_name, "w")
+                        file.write("date,Bx,By,Bz,Mx,My,Mz,dst\n")
+                    except:
+                        print(date)
                 else:
                     file = open(out_name, "a")
                 file.write(f"{date},{x},{y},{z},{xm},{ym},{zm},{dst}\n")            

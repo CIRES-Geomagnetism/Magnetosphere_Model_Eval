@@ -202,7 +202,7 @@ def Em_atcloud(cursor, table, start_time, end_time):
 def adjust_F107_time(time):
 
     #f107_time = time - dt.timedelta(hours=14610)
-    f107_time = f107_time.replace(hour=0, minute =0)
+    f107_time = time.replace(hour=0, minute =0)
     f107_ave_start = f107_time - dt.timedelta(days=40)
     f107_ave_end = f107_time + dt.timedelta(days=41)
 

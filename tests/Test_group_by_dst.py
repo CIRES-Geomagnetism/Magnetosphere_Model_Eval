@@ -16,16 +16,16 @@ class Test_group_dst(unittest.TestCase):
     def test_output_path(self):
         
         location = "ASC"
-        self.assertEqual(self.output_folder, "/Users/li-yin.young/Projects/Magnetosphere_Model_Eval/results/global")
+        self.assertEqual(self.output_folder, "/Users/lily/Projects/Magnetosphere_Model_Eval/results/global")
         filename = group_by_dst.output_path(-100, location, self.output_folder)
         
-        true_filename = f"/Users/li-yin.young/Projects/Magnetosphere_Model_Eval/results/global/{location}/data_model_n100_50.csv"
+        true_filename = f"/Users/lily/Projects/Magnetosphere_Model_Eval/results/global/{location}/data_model_n100_50.csv"
         self.assertEqual(filename, true_filename)
     
     def test_group(self):
         
         location = "ASC"
-        stop_time = "199703"
+        stop_time = "202301"
         filename = os.path.join(self.inp_folder, f"Data_vs_Model_{location}_19970101_20221231_wGSM.txt")
         group_by_dst.group(filename, self.output_folder, location, stop_time)
 
