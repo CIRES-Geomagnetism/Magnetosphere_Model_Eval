@@ -124,8 +124,8 @@ def to_datetime(dates):
 
 def check_folder(folder_path):
 
-	if not os.path.isdir(folder_path):
-		os.mkdir(folder_path)
+    if not os.path.isdir(folder_path):
+        os.mkdir(folder_path)
 
 def plot_results(dates, true, preds, labels, elm_name, start_time, end_time, plot_folder_path, time_tag, location):
 

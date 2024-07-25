@@ -73,12 +73,7 @@ def toDecimalYear(date_str):
     hour = parse_date.timetuple().tm_hour
     minute = parse_date.timetuple().tm_min
 
-    print(f"year: {year}")
-    print(f"day: {day}")
-    print(f"hour: {hour}")
-    print(f"minute: {minute}")
 
-    print(f"total days in year: {totalDaysYear}\n");
     fyear = year + (day - 1 + (hour + minute/60.0)/24.0) /totalDaysYear
 
     return fyear

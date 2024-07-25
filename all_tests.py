@@ -17,8 +17,8 @@ def test_average_f107(loader):
 def main():
     loader = unittest.TestLoader()
 
-    #test_group = test_group_by_dst(loader)
-    test_group = test_average_f107(loader)
+    test_group = test_group_by_dst(loader)
+    #test_group = test_average_f107(loader)
 
     runner = unittest.TextTestRunner()
     runner.run(test_group)

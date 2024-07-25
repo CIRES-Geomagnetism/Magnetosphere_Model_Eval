@@ -18,4 +18,5 @@ results/pomme_calc_ext_results.txt
 results/pomme_calc_gsm_results.txt
 results/pomme_calc_sm_results.txt
 results/pomme_rt_results.txt
-test_hon_pom.sh
+results/global/*/data*.csv
+

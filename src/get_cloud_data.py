@@ -158,6 +158,8 @@ def compute_Em(y, z, swv):
         theta = math.acos(z/B_t)
         em = swv * B_t * math.sin(theta/2)**2 / 1000
         return round(em, 6)
+
+
      
 def Em_atcloud(cursor, table, start_time, end_time):
      
