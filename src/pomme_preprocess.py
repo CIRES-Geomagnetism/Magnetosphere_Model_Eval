@@ -21,6 +21,7 @@ def get_est_ist(dst):
     return est, ist
 
 
+
 def create_inpus_file(m_file, omni_file, f107_file, out_file):
 
     dates = src.create_fyear_inputs.get_time_from_inputs(m_file)
@@ -36,7 +37,7 @@ def create_inpus_file(m_file, omni_file, f107_file, out_file):
 
         writter = open(out_file, "w")
 
-        writter.write("dYear,est,ist,imf_by,em,f107\n")
+        writter.write("dYear,est,ist,imf_by,em,f107,dst\n")
 
         for i, line in enumerate(omni_fp):
             vals = line.split()
@@ -62,7 +63,7 @@ def create_inpus_file(m_file, omni_file, f107_file, out_file):
 
                 em = compute_Em(imf_by, imf_bz, speed)
 
-                writter.write(f"{fyear},{round(est,6)},{round(ist,6)},{imf_by},{round(em,6)},{f107}\n")
+                writter.write(f"{fyear},{round(est,6)},{round(ist,6)},{imf_by},{round(em,6)},{f107},{dst}\n")
 
         writter.close()
 

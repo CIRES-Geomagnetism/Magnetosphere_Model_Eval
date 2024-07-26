@@ -6,38 +6,55 @@
 
 time_tag="20150623"
 
-exe_path="./build/pomme_calc"
-info_path="Martin_text_files_with_GSM_fields/loc_info.txt"
-data_path="inputs/cloud_data_inputs_${time_tag}.txt"
+exe_path="./pomme_calc"
+info_path="Martin_text_files_with_GSM_fields_2/loc_info.txt"
+data_path="inputs/pomme_inputs_50.txt"
+
+
+pomme_res_dir="pomme_results"
+
+pomme_tmpfile="pom_tmp.txt"
 max_lat=90
 elev="0.0"
+
 check_dir(){
-    if [ ! -d "results/$1" ]; then
-        mkdir "results/$1"
+    if [ ! -d $pomme_res_dir ]; then
+        mkdir $pomme_res_dir
+    else
+      rm -rf $pomme_res_dir
+      mkdir $pomme_res_dir
     fi
 }
+
+
+check_dir
 
 {
 read
 while IFS=, read -r location colat lon
 do
-    results_file="results/global/${location}/pomme_cloud_results_${time_tag}.txt"
-    check_dir $location
+    results_file="$pomme_res_dir/pomme_${location}.txt"
+
     lat=$(echo "$max_lat - $colat" | bc)
  
-    echo "date alt lat lon decline incline H X Y Z F" > $results_file
+    echo "date X Y Z dst" > $results_file
 
     {
     read
-    while IFS=, read -r dates fYear est ist imf_by em f107
+    while IFS=, read -r fYear est ist imf_by em f107 dst
     do
-      # build commands and save im temporary file
-      
-      $exe_path -a $lat -o $lon -d $fYear -e $elev -E $est -I $ist -B $imf_by -R $f107 -m $em -T C > tmp.txt
-      
-      tail -n 1 tmp.txt >> $results_file
-                 
-    done 
+        # build commands and save im temporary file
+
+        $exe_path -a $lat -o $lon -d $fYear -e $elev -E $est -I $ist -B $imf_by -R $f107 -m $em -T C > tmp.txt
+
+        tail -n 1 tmp.txt > $pomme_tmpfile
+
+        while IFS=, read -r fYear alt lat lon decline incline H X Y Z F
+        do
+          echo "$fYear,$X,$Y,$Z,$dst" >> $results_file
+
+        done < $pomme_tmpfile
+    done
     } < $data_path    
 done 
 } < $info_path

@@ -41,7 +41,7 @@ def output_path(dst, location, out_folder):
 
     return out_name      
 
-def group_Mmodel(inp_filename, out_folder, location, break_time="202301"):
+def group_model(inp_filename, out_folder, location, break_time="202301"):
 
     remove_folder(os.path.join(out_folder, location))
 

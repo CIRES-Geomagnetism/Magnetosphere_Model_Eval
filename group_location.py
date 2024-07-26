@@ -8,7 +8,7 @@ def run_group_forAllLocation(inp_folder, output_folder, stop_time="202301"):
     files = os.listdir(output_folder)
 
     for location in files:
-        if len(str(location)) > 3 or location == "ASC":
+        if len(str(location)) > 3:
             continue
         else:
             print(location)
