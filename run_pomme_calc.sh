@@ -1,14 +1,13 @@
-#!/bin/zsh
+#!/bin/bash
 
 #make clean
 #make all
 
 
-time_tag="20150623"
 
 exe_path="./pomme_calc"
 info_path="Martin_text_files_with_GSM_fields_2/loc_info.txt"
-data_path="inputs/pomme_inputs_50.txt"
+data_path="inputs/pomme_inputs_19972022.txt"
 
 
 pomme_res_dir="pomme_results"
@@ -30,17 +29,18 @@ check_dir(){
 check_dir
 
 {
-read
+read -r REPLY
 while IFS=, read -r location colat lon
 do
-    results_file="$pomme_res_dir/pomme_${location}.txt"
+    echo "$location"
+    results_file="$pomme_res_dir/pomme_$location.txt"
 
     lat=$(echo "$max_lat - $colat" | bc)
  
     echo "date X Y Z dst" > $results_file
 
     {
-    read
+    read -r REPLY
     while IFS=, read -r fYear est ist imf_by em f107 dst
     do
         # build commands and save im temporary file
