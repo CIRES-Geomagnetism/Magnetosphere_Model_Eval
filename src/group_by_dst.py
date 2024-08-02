@@ -361,7 +361,7 @@ def plot(dst, xm, xp, labels, elm):
     xm = np.array(xm, dtype=float)
     xp = np.array(xp, dtype=float)
 
-    plt.title(f"RMS of {elm} RMSE group from 19970101 to 20221231")
+    plt.title(f"RMS of {elm} RMSE in 15 locations from 19970101 to 20221231")
     plt.plot(dst, xm, 'o-', label=labels[0])
     plt.plot(dst, xp, 'o-', label=labels[1])
     plt.xlabel("DST")
@@ -398,7 +398,7 @@ def plot_rms_results(rms_file):
 
     plot(dst, xm, xp, labels, "Bx")
     plot(dst, ym, yp, labels, "By")
-    plot(dst, ym, yp, labels, "Bz")
+    plot(dst, zm, zp, labels, "Bz")
 
 
 

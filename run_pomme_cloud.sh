@@ -7,10 +7,10 @@
 
 exe_path="./pomme_calc"
 info_path="Martin_text_files_with_GSM_fields_2/loc_info.txt"
-data_path="inputs/pomme_inputs_19972022.txt"
+data_path="inputs/cloud_data_inputs_201503.txt"
 
 
-pomme_res_dir="pomme_results"
+pomme_res_dir="pomme_cloud_results"
 
 pomme_tmpfile="pom_tmp.txt"
 max_lat=90
@@ -41,7 +41,7 @@ do
 
     {
     read -r REPLY
-    while IFS=, read -r fYear est ist imf_by em f107 dst
+    while IFS=, read -r dates fYear est ist imf_by em f107
     do
         # build commands and save im temporary file
 
@@ -51,12 +51,13 @@ do
 
         while IFS=, read -r fYear alt lat lon decline incline H X Y Z F
         do
-          echo "$fYear,$X,$Y,$Z,$dst" >> $results_file
+          echo "$fYear,$X,$Y,$Z" >> $results_file
 
         done < $pomme_tmpfile
     done
     } < $data_path
 done
 } < $info_path
+
 
 

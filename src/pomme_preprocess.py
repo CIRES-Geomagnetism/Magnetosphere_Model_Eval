@@ -1,4 +1,6 @@
 import math
+import numpy as np
+
 import src.average_f107
 import src.create_fyear_inputs
 
@@ -68,7 +70,32 @@ def create_inpus_file(m_file, omni_file, f107_file, out_file):
         writter.close()
 
 
+def extract_outputs_byTime(min_dyear, max_dyear, filename):
 
+    Bx, By, Bz = [], [], []
+    with open(filename, "r") as file:
+        for i, line in enumerate(file):
+
+            vals = line.split(",")
+
+            if i == 0:
+                continue
+            else:
+                dyear = float(vals[0])
+
+                if min_dyear <= dyear <= max_dyear:
+
+                    Bx.append(vals[1])
+                    By.append(vals[2])
+                    Bz.append(vals[3])
+                elif dyear > max_dyear:
+                    break
+
+    Bx = np.array(Bx, dtype=float)
+    By = np.array(By, dtype=float)
+    Bz = np.array(Bz, dtype=float)
+
+    return Bx, By, Bz
 
 
 

@@ -296,15 +296,15 @@ def toDecimalYear(date):
    
 def main():
 
-    start_time = "2015-12-15 00:30:00"
-    end_time = "2015-12-25 23:30:00"
+    start_time = "2015-03-01 00:30:00"
+    end_time = "2015-03-31 23:30:00"
 
     hostname = "23.236.60.213"
     db = "geomag"
     username = "root"
     passwd = "iwtlnk"
 
-    out_filename = "cloud_data_inputs_20151220.txt" 
+    out_filename = "cloud_data_inputs_201503.txt"
     
     try:
         conn = mysql.connector.connect(
@@ -323,14 +323,10 @@ def main():
         f107_ave = F107_atcloud(cursor, "F107", start_time, end_time)
         
         dates, dec_year = create_dates_arr(start_time, end_time)
-        print(len(dates))
-        print(len(est))
-        print(len(By))
-        print(len(Em))
-        print(len(f107_ave))
-        #assert len(Em) == len(dates)
 
-        output_data_to_file(dates, dec_year,  est, ist, By, Em, f107_ave, out_filename);
+        assert len(Em) == len(dates)
+
+        output_data_to_file(dates, dec_year,  est, ist, By, Em, f107_ave, out_filename)
         cursor.close()
         conn.close()
 
