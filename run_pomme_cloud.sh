@@ -43,13 +43,14 @@ do
     read -r REPLY
     while IFS=, read -r dates fYear est ist imf_by em f107
     do
+
         # build commands and save im temporary file
 
         $exe_path -a $lat -o $lon -d $fYear -e $elev -E $est -I $ist -B $imf_by -R $f107 -m $em -T C > tmp.txt
 
         tail -n 1 tmp.txt > $pomme_tmpfile
 
-        while IFS=, read -r fYear alt lat lon decline incline H X Y Z F
+        while IFS=, read -r fYear alt latitude longtitude decline incline H X Y Z F
         do
           echo "$fYear,$X,$Y,$Z" >> $results_file
 

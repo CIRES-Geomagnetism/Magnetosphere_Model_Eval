@@ -49,7 +49,7 @@ do
 
         tail -n 1 tmp.txt > $pomme_tmpfile
 
-        while IFS=, read -r fYear alt lat lon decline incline H X Y Z F
+        while IFS=, read -r fYear alt latitude longtitude decline incline H X Y Z F
         do
           echo "$fYear,$X,$Y,$Z,$dst" >> $results_file
 

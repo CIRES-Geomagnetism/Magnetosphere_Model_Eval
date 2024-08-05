@@ -1,8 +1,38 @@
-import verify_outputs as vo
+import src.verify_outputs as vo
 import numpy as np
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 from datetime import datetime
+import os
+
+import src.utils
+
+def plot_results_from_arr(date, preds, labels, elm_name, save_dir, loc):
+    font = {'family': 'serif',
+            'color': 'darkred',
+            'weight': 'normal',
+            'size': 16,
+            }
+
+    fig, ax = plt.subplots()
+
+    ax.set_title(f"{elm_name} results from Pomme with cloud inputs and omni inputs at {loc}")
+    for i in range(len(preds)):
+        ax.plot(date, preds[i], label=labels[i])
+
+    rmse = src.utils.RMSE(preds[0], preds[1])
+    plt.text(0.25, 0.1, f"RMSE of two inputs for {elm_name}: {round(rmse, 2)}", horizontalalignment='center',
+             verticalalignment='center', transform=ax.transAxes)
+
+    filename = os.path.join(save_dir, loc, f"201503{elm_name}_pomme_omni.png")
+    plt.xlabel("Decimal Year")
+    plt.ylabel(str(elm_name))
+    plt.legend(loc="upper right")
+    plt.savefig(filename)
+    plt.show()
+
+
+
 def plot_sub_result(elm_name, folder, dates, trues, preds, labels, top_number):
 
     filename = f"{folder}/{elm_name}_{dates[0][:8]}_{dates[-1][:8]}.csv"
@@ -46,7 +76,7 @@ def plot_sub_result(elm_name, folder, dates, trues, preds, labels, top_number):
                     ax.format_xdata = mdates.DateFormatter(myFmt)
 
                     plt.text(0.25,0.1+0.1*j,f"RMSE of {labels[j]}: {round(rmse,2)}", horizontalalignment='center', verticalalignment='center', transform=ax.transAxes)
-                
+
                 plt.xticks(rotation=45)         
                 plt.legend(loc = "upper right")
                 plt.savefig(f"{plot_folder_path}/{elm_name}_std{idx}.png")

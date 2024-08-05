@@ -1,6 +1,8 @@
 import math
 import numpy as np
+import os
 
+import src.plot_results
 import src.average_f107
 import src.create_fyear_inputs
 
@@ -72,7 +74,7 @@ def create_inpus_file(m_file, omni_file, f107_file, out_file):
 
 def extract_outputs_byTime(min_dyear, max_dyear, filename):
 
-    Bx, By, Bz = [], [], []
+    date, Bx, By, Bz = [], [], [], []
     with open(filename, "r") as file:
         for i, line in enumerate(file):
 
@@ -84,18 +86,65 @@ def extract_outputs_byTime(min_dyear, max_dyear, filename):
                 dyear = float(vals[0])
 
                 if min_dyear <= dyear <= max_dyear:
-
+                    date.append(dyear)
                     Bx.append(vals[1])
                     By.append(vals[2])
                     Bz.append(vals[3])
                 elif dyear > max_dyear:
                     break
 
+    date = np.array(date, dtype=float)
     Bx = np.array(Bx, dtype=float)
     By = np.array(By, dtype=float)
     Bz = np.array(Bz, dtype=float)
 
-    return Bx, By, Bz
+    return date, Bx, By, Bz
+
+def get_location_list(top_dir, res_dirname):
+
+    res_dir = os.path.join(top_dir, res_dirname)
+
+    files = os.listdir(str(res_dir))
+
+    locations = []
+
+    for loc in files:
+        path = os.path.join(str(res_dir), loc)
+        if os.path.isdir(path):
+            locations.append(loc)
+
+    return locations
+
+
+def compare_cloud_omni_inputs(top_dir, cloud_dir, omni_dir, location_list, min_dyear, max_dyear):
+
+    cloud_dir = os.path.join(top_dir, cloud_dir)
+    omni_dir = os.path.join(top_dir, omni_dir)
+
+    for loc in location_list:
+        print(loc)
+        cloud_file = os.path.join(cloud_dir, f"pomme_{loc}.txt")
+        omni_file = os.path.join(omni_dir, f"pomme_{loc}.txt")
+
+        date, cx, cy, cz = extract_outputs_byTime(min_dyear, max_dyear, cloud_file)
+        date, mx, my, mz = extract_outputs_byTime(min_dyear, max_dyear, omni_file)
+
+        pred_x = [cx, mx]
+        pred_y = [cy, my]
+        pred_z = [cz, mz]
+
+        labels = ["Database at GCP", "NASA Omni"]
+
+        path = os.path.join(top_dir, "results")
+
+        src.plot_results.plot_results_from_arr(date, pred_x, labels, "Bx", path, loc)
+        src.plot_results.plot_results_from_arr(date, pred_y, labels, "By", path, loc)
+        src.plot_results.plot_results_from_arr(date, pred_z, labels, "Bz", path, loc)
+
+
+
+
+
 
 
 

@@ -3,7 +3,7 @@ import math
 import os
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
-import utils
+import src.utils
 def get_NewTrueMag_arrays(filename):
 
     date, x, y, z, x_m, y_m, z_m = [], [], [], [], [], [], [] 
