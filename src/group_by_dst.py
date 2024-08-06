@@ -414,8 +414,9 @@ def plot_rmse(dst, xm, xp, labels, elm, loc, out_dir):
     plt.xlabel("DST")
     plt.ylabel("RMSE")
     plt.legend(loc="upper right")
-    plt.show()
     plt.savefig(filename)
+    plt.show()
+
 def plot_dst_rmse(filename, out_dir):
 
 

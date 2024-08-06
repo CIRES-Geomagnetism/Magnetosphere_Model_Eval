@@ -26,19 +26,6 @@ results/pomme_calc_sm_results.txt
 results/pomme_rt_results.txt
 results/global/*/data*.csv
 
+results/*/*.csv
+results/*/*.txt
 
-results/ASC/
-results/ASP/
-results/BSL/
-results/CLF/
-results/FRN/
-results/GUA/
-results/HAD/
-results/HBK/
-results/HON/
-results/HYB/
-results/KAK/
-results/KOU/
-results/PHU/
-results/PPT/
-results/SPT/
