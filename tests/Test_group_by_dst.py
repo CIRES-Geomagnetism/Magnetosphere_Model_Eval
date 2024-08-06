@@ -94,7 +94,7 @@ class Test_group_dst(unittest.TestCase):
 
     def test_attach_three_results(self):
 
-        p_file = os.path.join(self.top_folder,"pomme_results", "pomme_ASC.txt")
+        p_file = os.path.join(self.top_folder,"pomme_all_results", "pomme_ASC.txt")
         m_file = os.path.join(self.inp_folder, "Data_vs_Model_ASC_19970101_20221231_wGSM.txt")
 
         out_file = os.path.join(self.output_folder, "ASC", "martin_pomme_ASC.txt")
@@ -136,7 +136,13 @@ class Test_group_dst(unittest.TestCase):
 
         rms_file =  os.path.join(self.output_folder, "rms_group.csv")
 
-        group_by_dst.plot_rms_results(rms_file)
+        group_by_dst.plot_rms_Allresults(rms_file)
+
+    def test_plot_dst_rmse(self):
+
+        dst_rmse_file = os.path.join(self.output_folder, "dst_rmse.csv")
+
+        group_by_dst.plot_dst_rmse(dst_rmse_file, self.output_folder)
 
 
 

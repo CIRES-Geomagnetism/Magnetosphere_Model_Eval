@@ -1,11 +1,12 @@
 import unittest
+from tests import Test_group_by_dst
 
 TEST_FOLDER = "tests"
 
 def test_group_by_dst(loader):
 
 
-    group_by_dst = loader.discover(TEST_FOLDER, pattern="Test_group*.py")
+    group_by_dst = loader.loadTestsFromModule(Test_group_by_dst.Test_group_dst)
 
     return group_by_dst
 

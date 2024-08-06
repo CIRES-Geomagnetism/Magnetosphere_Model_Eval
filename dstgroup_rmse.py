@@ -2,6 +2,16 @@ import os
 
 from src import group_by_dst
 
+def rms_all_rmse_group(output_folder, dst_file):
+
+    dst_group = group_by_dst.setup_dstgroup_num()
+
+
+    mt_map, pom_map = group_by_dst.create_loc_map(dst_file)
+    out_file = os.path.join(output_folder, "rms_group.csv")
+
+    group_by_dst.output_rmsgroup_results(mt_map, pom_map, out_file, dst_group)
+
 
 
 def main():
@@ -22,6 +32,8 @@ def main():
             print(location)
             if os.path.isdir(os.path.join(output_folder, location)):
                 group_by_dst.write_results_file(output_folder, location, writter)
+
+    rms_all_rmse_group(output_folder, res_filename)
 
 
 

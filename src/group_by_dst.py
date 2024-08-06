@@ -356,7 +356,7 @@ def output_rmsgroup_results(mt_map, pom_map, out_file, dst_group):
 
             file.write(f"{min_dst},{max_dst},{rms_xm},{rms_ym},{rms_zm},{rms_xp},{rms_yp},{rms_zp}\n")
 
-def plot(dst, xm, xp, labels, elm):
+def plot_rms(dst, xm, xp, labels, elm):
 
     xm = np.array(xm, dtype=float)
     xp = np.array(xp, dtype=float)
@@ -370,7 +370,7 @@ def plot(dst, xm, xp, labels, elm):
     plt.show()
 
 
-def plot_rms_results(rms_file):
+def plot_rms_Allresults(rms_file):
 
 
     xm, ym, zm, xp, yp, zp = [], [], [], [], [], []
@@ -396,9 +396,62 @@ def plot_rms_results(rms_file):
 
     labels = ["Martin", "Pomme"]
 
-    plot(dst, xm, xp, labels, "Bx")
-    plot(dst, ym, yp, labels, "By")
-    plot(dst, zm, zp, labels, "Bz")
+    plot_rms(dst, xm, xp, labels, "Bx")
+    plot_rms(dst, ym, yp, labels, "By")
+    plot_rms(dst, zm, zp, labels, "Bz")
+
+
+def plot_rmse(dst, xm, xp, labels, elm, loc, out_dir):
+
+    xm = np.array(xm, dtype=float)
+    xp = np.array(xp, dtype=float)
+
+    filename = os.path.join(out_dir, loc, f"{loc}_{elm}_dst_rmse.png")
+
+    plt.title(f"RMSE of {elm} of DST group in {loc} from 19970101 to 20221231")
+    plt.plot(dst, xm, 'o-', label=labels[0])
+    plt.plot(dst, xp, 'o-', label=labels[1])
+    plt.xlabel("DST")
+    plt.ylabel("RMSE")
+    plt.legend(loc="upper right")
+    plt.show()
+    plt.savefig(filename)
+def plot_dst_rmse(filename, out_dir):
+
+
+
+
+    xm, ym, zm, xp, yp, zp = [], [], [], [], [], []
+    dst = np.arange(-325, 125, 50)
+    labels = ["Martin", "Pomme"]
+
+    with open(filename, "r") as file:
+        for i, line in enumerate(file):
+
+            if i == 0:
+                continue
+
+            vals = line.split(",")
+            loc = vals[0]
+            xm.append(vals[3])
+            ym.append(vals[4])
+            zm.append(vals[5])
+
+            xp.append(vals[6])
+            yp.append(vals[7])
+            zp.append(vals[8])
+
+            if i % 9  == 0:
+
+                plot_rmse(dst, xm, xp, labels, "Bx", loc, out_dir)
+                plot_rmse(dst, ym, yp, labels, "By", loc, out_dir)
+                plot_rmse(dst, zm, zp, labels, "Bz", loc, out_dir)
+                xm, ym, zm, xp, yp, zp = [], [], [], [], [], []
+
+
+
+
+
 
 
 
